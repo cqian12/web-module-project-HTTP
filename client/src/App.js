@@ -30,7 +30,9 @@ const App = (props) => {
   }
 
   const addToFavorites = (movie) => {
-    
+    favoriteMovies.some(movies => movies.id === movie.id) 
+    ? setFavoriteMovies(favoriteMovies.filter(movies => movies.id !== movie.id))
+    : setFavoriteMovies([...favoriteMovies,movie])
   }
 
   return (
@@ -49,17 +51,17 @@ const App = (props) => {
               <EditMovieForm setMovies={setMovies} />
             </Route>
 
+            <Route path="/movies/addmovie">
+              <AddMovieForm setMovies={setMovies} />
+            </Route>
+
             <Route path="/movies/:id">
-              <Movie deleteMovie={deleteMovie} />
+              <Movie deleteMovie={deleteMovie} addToFavorites={addToFavorites} />
             </Route>
 
             <Route path="/movies">
               <MovieList movies={movies}/>
             </Route>c
-
-            <Route path="/addmovie">
-              <AddMovieForm setMovies={setMovies}/>
-            </Route>
 
             <Route path="/">
               <Redirect to="/movies"/>
